@@ -14,6 +14,7 @@ Mood::Mood(string _id, string _videoPath, float _time){
     this->videoPath=_videoPath;
     this->timeToPlay=_time;
     this->player = new ofVideoPlayer();
+    this->player->setLoopState(OF_LOOP_NORMAL);
 }
 
 Mood::~Mood(){

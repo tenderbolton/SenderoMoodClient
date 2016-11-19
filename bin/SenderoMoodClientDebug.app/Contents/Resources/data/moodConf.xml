@@ -1,5 +1,7 @@
 <?xml version="1.0" ?>
 <settings>
+    <transition time="5.0"/>
+    <fbo_config width="256" height="256"/>
     <framemap>
         <Pixel id='0' x='108' y='94' />
         <Pixel id='1' x='101' y='119' />

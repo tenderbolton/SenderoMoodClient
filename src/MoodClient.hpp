@@ -29,6 +29,10 @@ public:
     map<int, ofVec2f> pixelMap;
     map<string, Mood*> moods;
     Mood* currentMood;
+    Mood* nextMood;
+    bool onTransition;
+    float transitionTime;
+    float transitionStartTime;
     map<string, CommOutManager*> commouts;
     vector<CommInManager*> commins;
     
@@ -48,9 +52,11 @@ public:
     
     void stopCurrentMood();
     
+    void pauseCurrentMood();
+    
     void playCurrentMood();
     
-    void assignMood(string moodId);
+    void goToMood(string moodId);
     
     void moveToNextMood();
     
@@ -62,12 +68,21 @@ public:
     
     void loadConfig();
     
+    void processFBO();
+    
+    ofColor getCurrentBaseColor(float currTranTime);
+    ofColor getCurrentBaseColorTransition(float currTranTime);
+    
     ofxXmlSettings* settings;
     
     float fpsToSendMood;
     float lastSentMoodTimeStamp;
     
     float currentMoodStartTime;
+    
+    ofFbo fbo;
+    
+    ofImage* imageJoined;
     
 };
 
