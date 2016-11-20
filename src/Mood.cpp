@@ -13,7 +13,7 @@ Mood::Mood(string _id, string _videoPath, float _time){
     this->id=_id;
     this->videoPath=_videoPath;
     this->timeToPlay=_time;
-    this->player = new ofVideoPlayer();
+    this->player = new ofxHapPlayer();
     this->player->setLoopState(OF_LOOP_NORMAL);
 }
 
@@ -33,7 +33,7 @@ void Mood::loadVideo(){
     this->player->load(this->videoPath);
 }
 
-ofVideoPlayer* Mood::getVideoPlayer(){
+ofxHapPlayer* Mood::getVideoPlayer(){
     return this->player;
 }
 

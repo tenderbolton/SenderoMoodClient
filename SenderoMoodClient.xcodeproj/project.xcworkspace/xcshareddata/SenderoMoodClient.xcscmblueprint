@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "576DD90772E7C769AF08FF9749B6182EFA9DD860",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "BFCEBA68FA34CC9D42430E49FB09A6EA416EC05F" : 0,
+    "576DD90772E7C769AF08FF9749B6182EFA9DD860" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "693FB189-0C71-43D5-9959-49FCFF70B30F",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "BFCEBA68FA34CC9D42430E49FB09A6EA416EC05F" : "..\/..\/addons\/ofxHapPlayer",
+    "576DD90772E7C769AF08FF9749B6182EFA9DD860" : "SenderoMoodClient\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "SenderoMoodClient",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "SenderoMoodClient.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/tenderbolton\/SenderoMoodClient.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "576DD90772E7C769AF08FF9749B6182EFA9DD860"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/bangnoise\/ofxHapPlayer.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "BFCEBA68FA34CC9D42430E49FB09A6EA416EC05F"
+    }
+  ]
+}

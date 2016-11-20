@@ -104,9 +104,19 @@
     </commins>
 
 	<moods>
-		<mood name="ruido" video="videos/BG_01.mov" time="20.0"/>
-		<mood name="flash" video="videos/BG_02.mov" time="20.0"/>
-		<mood name="noise" video="videos/BG_03B.mov" time="20.0"/>
+		<mood name="ruido" video="videos/BG_01_HAP.mov" time="20.0"/>
+		<mood name="flash" video="videos/BG_02_HAP.mov" time="20.0"/>
+		<mood name="noise" video="videos/BG_03B_HAP.mov" time="20.0"/>
 	</moods>
+    
+    <day_colors>
+        <day_color day="0" h="0.0" s="255.0" b="255.0"/>
+        <day_color day="1" h="120.0" s="255.0" b="255.0"/>
+        <day_color day="2" h="0.0" s="255.0" b="255.0"/>
+        <day_color day="3" h="30.0" s="255.0" b="255.0"/>
+        <day_color day="4" h="0.0" s="255.0" b="255.0"/>
+        <day_color day="5" h="200.0" s="255.0" b="255.0"/>
+        <day_color day="6" h="0.0" s="255.0" b="255.0"/>
+    </day_colors>
     
 </settings>

@@ -20,6 +20,7 @@
 #include "Mood.hpp"
 #include "OSCManager.h"
 #include "OSCInputManager.h"
+#include <time.h>
 
 
 class MoodClient : public SpecificBehaviour
@@ -28,6 +29,7 @@ public:
     
     map<int, ofVec2f> pixelMap;
     map<string, Mood*> moods;
+    map<int, ofColor> dayColors;
     Mood* currentMood;
     Mood* nextMood;
     bool onTransition;
@@ -56,6 +58,8 @@ public:
     
     void playCurrentMood();
     
+    void playNextMood();
+    
     void goToMood(string moodId);
     
     void moveToNextMood();
@@ -70,6 +74,7 @@ public:
     
     void processFBO();
     
+    ofColor getDayColor();
     ofColor getCurrentBaseColor(float currTranTime);
     ofColor getCurrentBaseColorTransition(float currTranTime);
     
@@ -83,6 +88,16 @@ public:
     ofFbo fbo;
     
     ofImage* imageJoined;
+    
+    
+    //calendar utils
+    int getYear();
+    int getMonth();
+    int getDay();
+    int getWeekDay();
+    int getHoursDay();
+    int getMinutesDay();
+    int getSecondsDay();
     
 };
 

@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include "ofMain.h"
+#include "ofxHapPlayer.h"
 
 class Mood
 {
@@ -18,7 +19,7 @@ private:
     string id;
     string videoPath;
     float timeToPlay;
-    ofVideoPlayer* player;
+    ofxHapPlayer* player;
 
 public:
     
@@ -28,7 +29,7 @@ public:
     string getId();
     float getTimeToPlay();
     void loadVideo();
-    ofVideoPlayer* getVideoPlayer();
+    ofxHapPlayer* getVideoPlayer();
     void update();
     
 };

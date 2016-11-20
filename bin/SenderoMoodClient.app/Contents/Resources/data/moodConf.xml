@@ -1,0 +1,112 @@
+<?xml version="1.0" ?>
+<settings>
+    <transition time="5.0"/>
+    <fbo_config width="256" height="256"/>
+    <framemap>
+        <Pixel id='0' x='108' y='94' />
+        <Pixel id='1' x='101' y='119' />
+        <Pixel id='2' x='121' y='103' />
+        <Pixel id='3' x='134' y='108' />
+        <Pixel id='4' x='137' y='94' />
+        <Pixel id='5' x='159' y='84' />
+        <Pixel id='6' x='133' y='80' />
+        <Pixel id='7' x='125' y='66' />
+        <Pixel id='8' x='115' y='79' />
+        <Pixel id='9' x='93' y='71' />
+        <Pixel id='10' x='30' y='201' />
+        <Pixel id='11' x='14' y='197' />
+        <Pixel id='12' x='15' y='211' />
+        <Pixel id='13' x='119' y='23' />
+        <Pixel id='14' x='20' y='226' />
+        <Pixel id='15' x='242' y='68' />
+        <Pixel id='16' x='38' y='225' />
+        <Pixel id='17' x='51' y='220' />
+        <Pixel id='18' x='41' y='207' />
+        <Pixel id='19' x='41' y='194' />
+        <Pixel id='20' x='140' y='140' />
+        <Pixel id='21' x='148' y='154' />
+        <Pixel id='22' x='159' y='142' />
+        <Pixel id='23' x='177' y='149' />
+        <Pixel id='24' x='164' y='125' />
+        <Pixel id='25' x='165' y='111' />
+        <Pixel id='26' x='150' y='115' />
+        <Pixel id='27' x='135' y='124' />
+        <Pixel id='28' x='124' y='133' />
+        <Pixel id='29' x='83' y='213' />
+        <Pixel id='30' x='73' y='201' />
+        <Pixel id='31' x='65' y='215' />
+        <Pixel id='32' x='60' y='232' />
+        <Pixel id='33' x='244' y='93' />
+        <Pixel id='34' x='76' y='241' />
+        <Pixel id='35' x='186' y='191' />
+        <Pixel id='36' x='91' y='229' />
+        <Pixel id='37' x='153' y='196' />
+        <Pixel id='38' x='94' y='129' />
+        <Pixel id='39' x='71' y='68' />
+        <Pixel id='40' x='89' y='144' />
+        <Pixel id='41' x='87' y='159' />
+        <Pixel id='42' x='101' y='154' />
+        <Pixel id='43' x='123' y='169' />
+        <Pixel id='44' x='115' y='145' />
+        <Pixel id='45' x='108' y='129' />
+        <Pixel id='46' x='173' y='81' />
+        <Pixel id='47' x='167' y='97' />
+        <Pixel id='48' x='178' y='108' />
+        <Pixel id='49' x='190' y='111' />
+        <Pixel id='50' x='192' y='98' />
+        <Pixel id='51' x='202' y='88' />
+        <Pixel id='52' x='188' y='82' />
+        <Pixel id='53' x='149' y='53' />
+        <Pixel id='54' x='60' y='173' />
+        <Pixel id='55' x='65' y='191' />
+        <Pixel id='56' x='83' y='191' />
+        <Pixel id='57' x='128' y='194' />
+        <Pixel id='58' x='86' y='174' />
+        <Pixel id='59' x='73' y='163' />
+        <Pixel id='60' x='60' y='160' />
+        <Pixel id='61' x='227' y='70' />
+        <Pixel id='62' x='147' y='27' />
+        <Pixel id='63' x='213' y='77' />
+        <Pixel id='64' x='215' y='93' />
+        <Pixel id='65' x='207' y='180' />
+        <Pixel id='66' x='233' y='98' />
+        <Pixel id='67' x='238' y='82' />
+        <Pixel id='68' x='83' y='65' />
+        <Pixel id='69' x='95' y='58' />
+        <Pixel id='70' x='106' y='46' />
+        <Pixel id='71' x='93' y='41' />
+        <Pixel id='72' x='78' y='39' />
+        <Pixel id='73' x='70' y='56' />
+        <Pixel id='74' x='134' y='167' />
+        <Pixel id='75' x='129' y='183' />
+        <Pixel id='76' x='141' y='191' />
+        <Pixel id='77' x='154' y='184' />
+        <Pixel id='78' x='167' y='174' /> 
+        <Pixel id='79' x='152' y='168' /> 
+        <Pixel id='80' x='138' y='56' /> 
+        <Pixel id='81' x='144' y='41' /> 
+        <Pixel id='82' x='132' y='28' /> 
+        <Pixel id='83' x='119' y='36' /> 
+        <Pixel id='84' x='120' y='53' /> 
+        <Pixel id='85' x='189' y='156' /> 
+        <Pixel id='86' x='177' y='163' /> 
+        <Pixel id='87' x='180' y='178' /> 
+        <Pixel id='88' x='195' y='182' /> 
+        <Pixel id='89' x='202' y='168' />
+    </framemap>
+    
+    <commouts>
+        <commout type="OSC" name="OscCommOut1" />
+    </commouts>
+    
+    <commins>
+        <commin type="OSC" name="OscCommIn1" />
+    </commins>
+
+	<moods>
+		<mood name="ruido" video="videos/BG_01.mov" time="20.0"/>
+		<mood name="flash" video="videos/BG_02.mov" time="20.0"/>
+		<mood name="noise" video="videos/BG_03B.mov" time="20.0"/>
+	</moods>
+    
+</settings>

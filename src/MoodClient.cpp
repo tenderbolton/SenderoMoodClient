@@ -136,6 +136,26 @@ void MoodClient::loadConfig() {
     }
     
     settings->popTag();
+    
+    // loading day colors
+    
+    settings->pushTag("day_colors");
+    int daysCount = settings->getNumTags("day_color");
+    
+    for (int i = 0; i < daysCount; i++){
+        int day = ofToInt(settings->getAttribute("day_color", "day", "0", i));
+        float h = ofToFloat(settings->getAttribute("day_color", "h", "255.0", i));
+        float s = ofToFloat(settings->getAttribute("day_color", "s", "255.0", i));
+        float b = ofToFloat(settings->getAttribute("day_color", "b", "255.0", i));
+        
+        ofColor c;
+        c.setHsb(h, s, b);
+        
+        this->dayColors.insert(pair<int,ofColor>(day, c));
+        
+    }
+    
+    settings->popTag();
     settings->popTag();
 }
 
@@ -185,7 +205,11 @@ void MoodClient::update(){
         
         moodHeartBeat->setAddress("/mood");
         moodHeartBeat->addStringArg(this->currentMood->getId());
+        ofColor c = getDayColor();
         
+        moodHeartBeat->addFloatArg(c.getHue());
+        moodHeartBeat->addFloatArg(c.getSaturation());
+        moodHeartBeat->addFloatArg(c.getBrightness());
         
         //moodHeartBeat->addFloatArg(timeLeft);
         
@@ -333,6 +357,18 @@ void MoodClient::playCurrentMood(){
     }
 }
 
+void MoodClient::playNextMood(){
+    if(!onTransition){
+        if(this->nextMood->getVideoPlayer()->isPlaying()){
+            this->nextMood->getVideoPlayer()->setSpeed(1.0f);
+        }
+        else{
+            this->nextMood->getVideoPlayer()->play();
+            this->nextMood->getVideoPlayer()->setSpeed(1.0f);
+        }
+    }
+}
+
 void MoodClient::goToMood(string moodId){
     if(!this->onTransition){
         std::map<string,Mood*>::iterator it;
@@ -340,7 +376,7 @@ void MoodClient::goToMood(string moodId){
         it = this->moods.find(moodId);
         if (it != moods.end()){
             this->nextMood = it->second;
-            this->nextMood->getVideoPlayer()->play();
+            playNextMood();
             this->onTransition = true;
             this->transitionStartTime = ofGetElapsedTimef();
         }
@@ -359,7 +395,7 @@ void MoodClient::moveToNextMood(){
                 it=this->moods.begin();
             }
             this->nextMood = it->second;
-            this->nextMood->getVideoPlayer()->play();
+            playNextMood();
             this->onTransition = true;
             this->transitionStartTime = ofGetElapsedTimef();
         }
@@ -421,6 +457,8 @@ void MoodClient::drawPre(){
     ofDrawBitmapString("FPS: " + ofToString(ofGetFrameRate()), 10, 600);
     ofDrawBitmapString("Current Mood: " + this->currentMood->getId(), 10, 620);
     ofDrawBitmapString("Transition: " + ofToString(this->onTransition), 10, 640);
+    ofColor c= getDayColor();
+    ofDrawBitmapString("Current Color: hsb(" + ofToString(c.getHue()) + ", " + ofToString(c.getSaturation()) + ", " + ofToString(c.getBrightness()) +")", 10, 660);
     //ofDrawBitmapString("Press 't' to enable/disable test mode. ", 10, 660);
     //ofDrawBitmapString("Press 'up' or 'down' to change pixel to test. ", 10, 680);
     
@@ -629,26 +667,141 @@ void MoodClient::processFBO(){
     ofPixels &p = imageJoined->getPixels();
     fbo.readToPixels(p);
     
-    imageJoined->update();
+    //imageJoined->update();
 }
 
 ofColor MoodClient::getCurrentBaseColor(float currTranTime){
-    ofColor c;
+    ofColor c =  getDayColor();
     
     float baseAlpha = 255.0f - ofMap(currTranTime, 0.0f, this->transitionTime, 0.0f, 255.0f);
     //ofLogNotice("base alpha: " + ofToString(baseAlpha));
-    c.set(255.0f, 255.0f, 255.0f, baseAlpha);
-    //c.set(255.0f, 255.0f, 255.0f, 255.0f);
-    //c.setHsb(1.0f, 0.0f, 1.0f);
+    c.setHsb(c.getHue(), c.getSaturation(), c.getBrightness(), baseAlpha);
+   
+   
     return c;
 }
 
 ofColor MoodClient::getCurrentBaseColorTransition(float currTranTime){
-    ofColor c;
+    ofColor c =  getDayColor();
     float alphaTran = ofMap(currTranTime, 0.0f, this->transitionTime, 0.0f, 255.0f);
     //ofLogNotice("next tran: " + ofToString(alphaTran));
-    c.set(255.0f, 255.0f, 255.0f, alphaTran);
-    //c.setHsb(1.0f, 0.0f, 1.0f);
+    c.setHsb(c.getHue(), c.getSaturation(), c.getBrightness(), alphaTran);
     return c;
 }
+
+ofColor MoodClient::getDayColor(){
+    ofColor currColor;
+    ofColor nextColor;
+    ofColor retColor;
+    
+    retColor.setHsb(255.0f,255.0f,255.0f);
+    
+    int currDay = getWeekDay();
+    
+    int nextDay = currDay + 1;
+    
+    if(nextDay>6){
+        nextDay = 0;
+    }
+    
+    std::map<int,ofColor>::iterator it;
+    it = this->dayColors.find(currDay);
+    
+    if (it != dayColors.end()){
+        currColor = it->second;
+        
+        it = this->dayColors.find(nextDay);
+        
+        if (it != dayColors.end()){
+            nextColor = it->second;
+            
+            float totalSeconds = 86400.0f;
+            float currentSeconds = (getHoursDay()*60.0f*60.0f) + (getMinutesDay() * 60.0f) + getSecondsDay();
+            
+            //ofLogNotice("hora: " + ofToString(getHoursDay()) + " minuto: " + ofToString(getMinutesDay()) + " seg: " + ofToString(getSecondsDay()));
+            
+            float currHue = currColor.getHue();
+            float nextHue = nextColor.getHue();
+            
+            //one step blend
+            float a = ofMap(currentSeconds,0.0f,totalSeconds,0.0f,1.0f);
+            
+            if(currHue<nextHue){
+                
+                float newHue = currHue + ((nextHue-currHue) * a);
+                
+                retColor.setHue(newHue);
+            }
+            else{
+                //two step blend is needed
+                nextHue = 255.0f+nextHue;
+                float newHue = currHue + ((nextHue-currHue) * a);
+                
+                retColor.setHue(fmod(newHue, 255.0f));
+                
+            }
+        }
+    }
+    
+    return retColor;
+}
+
+int MoodClient::getYear(){
+    time_t 	curr;
+    tm 		local;
+    time(&curr);
+    local	=*(localtime(&curr));
+    int year = local.tm_year + 1900;
+    return year;
+}
+
+int MoodClient::getMonth(){
+    time_t 	curr;
+    tm 		local;
+    time(&curr);
+    local	=*(localtime(&curr));
+    int month = local.tm_mon + 1;
+    return month;
+}
+
+int MoodClient::getDay(){
+    time_t 	curr;
+    tm 		local;
+    time(&curr);
+    local	=*(localtime(&curr));
+    return local.tm_mday;
+}
+
+int MoodClient::getWeekDay(){
+    time_t 	curr;
+    tm 		local;
+    time(&curr);
+    local	=*(localtime(&curr));   
+    return local.tm_wday;  
+}
+
+int MoodClient::getHoursDay(){
+    time_t 	curr;
+    tm 		local;
+    time(&curr);
+    local	=*(localtime(&curr));
+    return local.tm_hour;
+}
+
+int MoodClient::getMinutesDay(){
+    time_t 	curr;
+    tm 		local;
+    time(&curr);
+    local	=*(localtime(&curr));
+    return local.tm_min;
+}
+
+int MoodClient::getSecondsDay(){
+    time_t 	curr;
+    tm 		local;
+    time(&curr);
+    local	=*(localtime(&curr));
+    return local.tm_sec;
+}
+
 

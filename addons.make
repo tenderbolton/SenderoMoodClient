@@ -1,5 +1,6 @@
 ofxAssimpModelLoader
 ofxGui
+ofxHapPlayer
 ofxNetwork
 ofxOsc
 ofxXmlSettings
