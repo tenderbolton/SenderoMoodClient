@@ -27,6 +27,7 @@ void MoodClient::customSetup(map<int, Pixel*>* pixels, vector<Pixel*>* pixelsFas
     onTransition = false;
     transitionTime = 0.0f;
     transitionStartTime=0.0f;
+    maxAlphaNorm = 1.0f;
     
     this->imageJoined = NULL;
     
@@ -269,6 +270,20 @@ void MoodClient::handleIncomingCommMessages(CommMessage* m){
                     this->moveToNextMood();
                 }
                 
+                if(o->getOSCMessage()->getAddress().compare("/backgroundAudio")==0){
+                    
+                    float maxAlpha = 1.0f;
+                    try{
+                        maxAlpha = o->getOSCMessage()->getArgAsFloat(0);
+                    }
+                    catch(std::exception const& e){
+                        ofLogNotice("Invalid OSC message");
+                    }
+                    
+                    this->maxAlphaNorm = maxAlpha;
+                    
+                }
+                
                 if(o->getOSCMessage()->getAddress().compare("/mood/select")==0){
                     
                     string moodId ="";
@@ -459,6 +474,7 @@ void MoodClient::drawPre(){
     ofDrawBitmapString("Transition: " + ofToString(this->onTransition), 10, 640);
     ofColor c= getDayColor();
     ofDrawBitmapString("Current Color: hsb(" + ofToString(c.getHue()) + ", " + ofToString(c.getSaturation()) + ", " + ofToString(c.getBrightness()) +")", 10, 660);
+    ofDrawBitmapString("Current Max Alpha Norm: " + ofToString(this->maxAlphaNorm), 10, 680);
     //ofDrawBitmapString("Press 't' to enable/disable test mode. ", 10, 660);
     //ofDrawBitmapString("Press 'up' or 'down' to change pixel to test. ", 10, 680);
     
@@ -479,6 +495,23 @@ void MoodClient::keyPressed(int key){
             this->moveToNextMood();
             break;
         }
+        case 'w':
+        {
+            this->maxAlphaNorm += 0.1f;
+            if(this->maxAlphaNorm>1.0f){
+                maxAlphaNorm = 1.0f;
+            }
+            break;
+        }
+        case 's':
+        {
+            this->maxAlphaNorm -= 0.1f;
+            if(this->maxAlphaNorm<0.0f){
+                maxAlphaNorm = 0.0f;
+            }
+            break;
+        }
+
         default: {
             break;
         }
@@ -674,6 +707,9 @@ ofColor MoodClient::getCurrentBaseColor(float currTranTime){
     ofColor c =  getDayColor();
     
     float baseAlpha = 255.0f - ofMap(currTranTime, 0.0f, this->transitionTime, 0.0f, 255.0f);
+    
+    baseAlpha = baseAlpha * this->maxAlphaNorm;
+    
     //ofLogNotice("base alpha: " + ofToString(baseAlpha));
     c.setHsb(c.getHue(), c.getSaturation(), c.getBrightness(), baseAlpha);
    
@@ -684,6 +720,9 @@ ofColor MoodClient::getCurrentBaseColor(float currTranTime){
 ofColor MoodClient::getCurrentBaseColorTransition(float currTranTime){
     ofColor c =  getDayColor();
     float alphaTran = ofMap(currTranTime, 0.0f, this->transitionTime, 0.0f, 255.0f);
+    
+    alphaTran = alphaTran * this->maxAlphaNorm;
+    
     //ofLogNotice("next tran: " + ofToString(alphaTran));
     c.setHsb(c.getHue(), c.getSaturation(), c.getBrightness(), alphaTran);
     return c;
