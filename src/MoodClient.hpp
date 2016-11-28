@@ -89,6 +89,8 @@ public:
     
     ofImage* imageJoined;
     
+    float maxAlphaNorm;
+    
     
     //calendar utils
     int getYear();
