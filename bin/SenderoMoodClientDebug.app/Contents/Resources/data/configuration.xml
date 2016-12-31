@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<Configuration address="localhost" port="5002" fps="24" useServer="0">
+<Configuration address="localhost" port="5002" UDPPort="5006" fps="24" useServer="0">
 	<Meshes>
 		<Mesh name='cylinderShort' path='meshes/cylinderShort100.obj' />
 		<Mesh name='cylinderLong' path='meshes/cylinderLong100.obj' />
